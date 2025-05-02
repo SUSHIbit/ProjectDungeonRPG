@@ -14,7 +14,11 @@ export default function Welcome({
                 <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
                     {auth.user ? (
                         <Link
-                            href={route("player.dashboard")}
+                            href={
+                                auth.user.is_admin
+                                    ? route("admin.enemies.index")
+                                    : route("player.dashboard")
+                            }
                             className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                         >
                             Dashboard
@@ -66,7 +70,11 @@ export default function Welcome({
                             </p>
                             {auth.user ? (
                                 <Link
-                                    href={route("player.dashboard")}
+                                    href={
+                                        auth.user.is_admin
+                                            ? route("admin.enemies.index")
+                                            : route("player.dashboard")
+                                    }
                                     className="mt-8 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 >
                                     Enter the Dungeon

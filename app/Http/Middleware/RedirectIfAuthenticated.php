@@ -21,7 +21,12 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // Redirect based on user role
+                if (Auth::user()->isAdmin()) {
+                    return redirect(route('admin.enemies.index'));
+                }
+                
+                return redirect(route('player.dashboard'));
             }
         }
 

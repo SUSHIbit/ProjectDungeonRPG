@@ -27,7 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Player Routes
-    Route::redirect('/dashboard', '/player/dashboard');
+    Route::redirect('/dashboard', '/player/dashboard')->name('dashboard');
+    
     Route::prefix('player')->name('player.')->group(function () {
         Route::get('/dashboard', [PlayerController::class, 'dashboard'])->name('dashboard');
         Route::post('/update-profile', [PlayerController::class, 'updateProfile'])->name('update-profile');

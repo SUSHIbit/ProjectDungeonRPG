@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\PlayerProfile;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -41,12 +42,27 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_admin' => false, // Default to regular player
+        ]);
+
+        // Create player profile
+        PlayerProfile::create([
+            'user_id' => $user->id,
+            'character_name' => 'Unnamed Hero',
+            'current_level' => 1,
+            'max_hp' => 100,
+            'attack_min' => 10,
+            'attack_max' => 15,
+            'defense' => 5,
+            'heal' => 20,
+            'highest_level_reached' => 1,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // Redirect to player dashboard after registration
+        return redirect(route('player.dashboard'));
     }
 }
