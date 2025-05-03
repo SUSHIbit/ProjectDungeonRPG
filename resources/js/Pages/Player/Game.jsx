@@ -1,11 +1,6 @@
-// resources/js/Pages/Player/Game.jsx
 import React, { useEffect, useState } from "react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 import axios from "axios";
-import PrimaryButton from "@/Components/PrimaryButton";
-import SecondaryButton from "@/Components/SecondaryButton";
-import DangerButton from "@/Components/DangerButton";
 
 export default function Game({
     auth,
@@ -347,143 +342,291 @@ export default function Game({
     }, [gameLog]);
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dungeon RPG - Level {currentLevel}
-                </h2>
-            }
-        >
-            <Head title={`Level ${currentLevel}`} />
+        <div className="min-h-screen bg-gray-900 text-white">
+            <Head title={`Dungeon RPG - Level ${currentLevel}`} />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            {/* Level Stat Upgrade Dialog */}
-                            {levelUp && (
-                                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-                                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-                                        <h3 className="text-xl font-bold mb-4">
-                                            Level Up!
-                                        </h3>
-                                        <p className="mb-4">
-                                            You've reached level{" "}
-                                            {currentLevel + 1}! Choose one stat
-                                            to upgrade:
-                                        </p>
+            <header className="border-b border-gray-800">
+                <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"
+                                className="h-10 w-10 fill-current text-red-500 mr-3"
+                            >
+                                <path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3z" />
+                            </svg>
+                            <h1 className="text-xl font-bold">
+                                Dungeon RPG - Level {currentLevel}
+                            </h1>
+                        </div>
+                        <nav className="flex space-x-4">
+                            <a
+                                href={route("player.dashboard")}
+                                className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+                            >
+                                Dashboard
+                            </a>
+                            <a
+                                href="#"
+                                className="px-3 py-2 text-sm font-medium rounded-md border-b-2 border-red-500 text-white"
+                            >
+                                Play Game
+                            </a>
+                            <a
+                                href={route("leaderboard")}
+                                className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
+                            >
+                                Leaderboard
+                            </a>
+                        </nav>
+                        <div className="flex items-center">
+                            <span className="mr-2 text-sm text-gray-400">
+                                Test User
+                            </span>
+                            <button className="text-gray-400 hover:text-white">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="w-5 h-5"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-                                        <div className="space-y-2">
-                                            <button
-                                                onClick={() =>
-                                                    handleStatUpgrade("max_hp")
-                                                }
-                                                className="w-full text-left p-2 hover:bg-gray-100 rounded flex justify-between"
-                                            >
-                                                <span>Max HP</span>
-                                                <span>+20</span>
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    handleStatUpgrade(
-                                                        "attack_min"
-                                                    )
-                                                }
-                                                className="w-full text-left p-2 hover:bg-gray-100 rounded flex justify-between"
-                                            >
-                                                <span>Attack Minimum</span>
-                                                <span>+3</span>
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    handleStatUpgrade(
-                                                        "attack_max"
-                                                    )
-                                                }
-                                                className="w-full text-left p-2 hover:bg-gray-100 rounded flex justify-between"
-                                            >
-                                                <span>Attack Maximum</span>
-                                                <span>+5</span>
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    handleStatUpgrade("defense")
-                                                }
-                                                className="w-full text-left p-2 hover:bg-gray-100 rounded flex justify-between"
-                                            >
-                                                <span>Defense</span>
-                                                <span>+2</span>
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    handleStatUpgrade("heal")
-                                                }
-                                                className="w-full text-left p-2 hover:bg-gray-100 rounded flex justify-between"
-                                            >
-                                                <span>Heal Value</span>
-                                                <span>+5</span>
-                                            </button>
-                                        </div>
+            <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+                {/* Level Up Modal */}
+                {levelUp && (
+                    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+                        <div className="bg-gray-800/90 bg-gradient-to-bl from-gray-700/90 via-transparent ring-1 ring-inset ring-white/10 rounded-lg shadow-2xl p-6 max-w-md w-full">
+                            <h3 className="text-2xl font-bold mb-4 text-center">
+                                Level Up!
+                            </h3>
+                            <p className="mb-6 text-center text-gray-300">
+                                You've reached level {currentLevel + 1}! Choose
+                                one stat to upgrade:
+                            </p>
+
+                            <div className="space-y-3">
+                                <button
+                                    onClick={() => handleStatUpgrade("max_hp")}
+                                    className="w-full text-left p-3 bg-gray-700/50 hover:bg-gray-700 rounded-md flex justify-between items-center transition"
+                                >
+                                    <span>Max HP</span>
+                                    <span className="text-green-400">+20</span>
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        handleStatUpgrade("attack_min")
+                                    }
+                                    className="w-full text-left p-3 bg-gray-700/50 hover:bg-gray-700 rounded-md flex justify-between items-center transition"
+                                >
+                                    <span>Attack Minimum</span>
+                                    <span className="text-green-400">+3</span>
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        handleStatUpgrade("attack_max")
+                                    }
+                                    className="w-full text-left p-3 bg-gray-700/50 hover:bg-gray-700 rounded-md flex justify-between items-center transition"
+                                >
+                                    <span>Attack Maximum</span>
+                                    <span className="text-green-400">+5</span>
+                                </button>
+                                <button
+                                    onClick={() => handleStatUpgrade("defense")}
+                                    className="w-full text-left p-3 bg-gray-700/50 hover:bg-gray-700 rounded-md flex justify-between items-center transition"
+                                >
+                                    <span>Defense</span>
+                                    <span className="text-green-400">+2</span>
+                                </button>
+                                <button
+                                    onClick={() => handleStatUpgrade("heal")}
+                                    className="w-full text-left p-3 bg-gray-700/50 hover:bg-gray-700 rounded-md flex justify-between items-center transition"
+                                >
+                                    <span>Heal Value</span>
+                                    <span className="text-green-400">+5</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Game Over Modal */}
+                {gameOver && (
+                    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+                        <div className="bg-gray-800/90 bg-gradient-to-bl from-gray-700/90 via-transparent ring-1 ring-inset ring-white/10 rounded-lg shadow-2xl p-6 max-w-md w-full">
+                            <h3 className="text-2xl font-bold mb-4 text-center text-red-500">
+                                Game Over
+                            </h3>
+                            <p className="mb-4 text-center">
+                                You were defeated at level {currentLevel}.
+                            </p>
+                            <p className="mb-6 text-center text-gray-300">
+                                Your highest level reached:{" "}
+                                {Math.max(
+                                    currentLevel,
+                                    playerProfile.highest_level_reached
+                                )}
+                            </p>
+
+                            <div className="flex justify-center">
+                                <button
+                                    onClick={handleExitGame}
+                                    className="px-6 py-3 bg-red-600 rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition shadow-lg shadow-red-600/30"
+                                >
+                                    Return to Dashboard
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <div className="bg-gray-800/50 bg-gradient-to-bl from-gray-700/50 via-transparent ring-1 ring-inset ring-white/5 rounded-lg shadow-2xl p-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Left Column - Player */}
+                        <div className="bg-gray-700/30 rounded-lg p-4">
+                            <h3 className="text-xl font-bold mb-4">
+                                {playerProfile.character_name || "Player"}
+                            </h3>
+
+                            {/* Health Bar */}
+                            <div className="mb-6">
+                                <div className="flex justify-between text-sm mb-1">
+                                    <span>HP</span>
+                                    <span>
+                                        {playerHP} / {playerProfile.max_hp}
+                                    </span>
+                                </div>
+                                <div className="w-full bg-gray-600 rounded-full h-4 overflow-hidden">
+                                    <div
+                                        className="bg-green-600 h-4 transition-all duration-300 ease-out"
+                                        style={{
+                                            width: `${
+                                                (playerHP /
+                                                    playerProfile.max_hp) *
+                                                100
+                                            }%`,
+                                        }}
+                                    ></div>
+                                </div>
+                            </div>
+
+                            {/* Player Stats */}
+                            <div className="grid grid-cols-2 gap-3 mb-6">
+                                <div className="bg-gray-800/70 p-3 rounded-lg">
+                                    <div className="text-sm text-gray-400">
+                                        Attack
+                                    </div>
+                                    <div>
+                                        {playerProfile.attack_min} -{" "}
+                                        {playerProfile.attack_max}
                                     </div>
                                 </div>
-                            )}
+                                <div className="bg-gray-800/70 p-3 rounded-lg">
+                                    <div className="text-sm text-gray-400">
+                                        Defense
+                                    </div>
+                                    <div>{playerProfile.defense}</div>
+                                </div>
+                            </div>
 
-                            {/* Game Over Dialog */}
-                            {gameOver && (
-                                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-                                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-                                        <h3 className="text-xl font-bold mb-4">
-                                            Game Over
-                                        </h3>
-                                        <p className="mb-4">
-                                            You were defeated at level{" "}
-                                            {currentLevel}.
-                                        </p>
-                                        <p className="mb-6">
-                                            Your highest level reached:{" "}
-                                            {Math.max(
-                                                currentLevel,
-                                                playerProfile.highest_level_reached
+                            {/* Skills */}
+                            <h4 className="font-medium mb-3">Skills</h4>
+                            <div className="space-y-2">
+                                {skills.map((skill) => {
+                                    const cooldown = skillCooldowns.find(
+                                        (cd) => cd.id === skill.id
+                                    );
+                                    const isOnCooldown =
+                                        cooldown && cooldown.remaining > 0;
+
+                                    return (
+                                        <button
+                                            key={skill.id}
+                                            onClick={() => useSkill(skill)}
+                                            disabled={
+                                                isOnCooldown ||
+                                                !playerTurn ||
+                                                loading ||
+                                                gameOver
+                                            }
+                                            className={`w-full text-left p-3 rounded-md flex justify-between items-center ${
+                                                isOnCooldown
+                                                    ? "bg-gray-700/50 text-gray-500 cursor-not-allowed"
+                                                    : playerTurn
+                                                    ? "bg-blue-900/30 hover:bg-blue-900/50 cursor-pointer"
+                                                    : "bg-gray-700/30 cursor-not-allowed"
+                                            }`}
+                                        >
+                                            <span>{skill.skill_name}</span>
+                                            {isOnCooldown && (
+                                                <span className="text-sm bg-gray-800 px-2 py-1 rounded-full">
+                                                    {cooldown.remaining}
+                                                </span>
                                             )}
-                                        </p>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
 
-                                        <div className="flex justify-end">
-                                            <PrimaryButton
-                                                onClick={handleExitGame}
-                                            >
-                                                Return to Dashboard
-                                            </PrimaryButton>
+                        {/* Middle Column - Enemy & Battle */}
+                        <div className="lg:col-span-2 flex flex-col">
+                            {/* Enemy Info */}
+                            {loading ? (
+                                <div className="flex items-center justify-center h-48 bg-gray-700/30 rounded-lg mb-4">
+                                    <div className="w-12 h-12 border-t-2 border-b-2 border-red-500 rounded-full animate-spin"></div>
+                                </div>
+                            ) : enemy ? (
+                                <div className="bg-gray-700/30 rounded-lg p-4 mb-4">
+                                    <div className="flex justify-between items-center mb-3">
+                                        <h3 className="text-xl font-bold">
+                                            {enemy.name}{" "}
+                                            <span className="text-sm font-normal text-gray-400">
+                                                (Level {enemy.level})
+                                            </span>
+                                        </h3>
+                                        <div className="text-sm">
+                                            <span className="text-gray-400 mr-2">
+                                                ATK
+                                            </span>
+                                            <span>
+                                                {enemy.attack_min}-
+                                                {enemy.attack_max}
+                                            </span>
+                                            <span className="text-gray-400 mx-2">
+                                                DEF
+                                            </span>
+                                            <span>{enemy.defense}</span>
                                         </div>
                                     </div>
-                                </div>
-                            )}
 
-                            {/* Main Game Area */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                {/* Left Column - Player Info */}
-                                <div className="bg-gray-50 p-4 rounded-md">
-                                    <h3 className="text-lg font-semibold mb-2">
-                                        {playerProfile.character_name ||
-                                            "Player"}
-                                    </h3>
-
-                                    {/* Health Bar */}
+                                    {/* Enemy Health Bar */}
                                     <div className="mb-4">
                                         <div className="flex justify-between text-sm mb-1">
                                             <span>HP</span>
                                             <span>
-                                                {playerHP} /{" "}
-                                                {playerProfile.max_hp}
+                                                {enemyHP} / {enemy.hp}
                                             </span>
                                         </div>
-                                        <div className="w-full bg-gray-300 rounded-full h-4">
+                                        <div className="w-full bg-gray-600 rounded-full h-4 overflow-hidden">
                                             <div
-                                                className="bg-green-600 h-4 rounded-full"
+                                                className="bg-red-600 h-4 transition-all duration-300 ease-out"
                                                 style={{
                                                     width: `${
-                                                        (playerHP /
-                                                            playerProfile.max_hp) *
+                                                        (enemyHP / enemy.hp) *
                                                         100
                                                     }%`,
                                                 }}
@@ -491,181 +634,82 @@ export default function Game({
                                         </div>
                                     </div>
 
-                                    {/* Player Stats */}
-                                    <div className="space-y-2 mb-4">
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div className="bg-white p-2 rounded shadow text-sm">
-                                                <span className="text-gray-600">
-                                                    Attack
-                                                </span>
-                                                <div>
-                                                    {playerProfile.attack_min} -{" "}
-                                                    {playerProfile.attack_max}
-                                                </div>
-                                            </div>
-                                            <div className="bg-white p-2 rounded shadow text-sm">
-                                                <span className="text-gray-600">
-                                                    Defense
-                                                </span>
-                                                <div>
-                                                    {playerProfile.defense}
-                                                </div>
-                                            </div>
+                                    {/* Enemy Image */}
+                                    <div className="flex justify-center my-6">
+                                        <div className="h-40 w-40 bg-gray-800/70 rounded-lg flex items-center justify-center overflow-hidden">
+                                            <img
+                                                src={`/storage/${enemy.image_path}`}
+                                                alt={enemy.name}
+                                                className="h-auto max-h-full max-w-full object-contain"
+                                            />
                                         </div>
-                                    </div>
-
-                                    {/* Player Skills */}
-                                    <h4 className="font-medium mb-2">Skills</h4>
-                                    <div className="space-y-2">
-                                        {skills.map((skill) => {
-                                            const cooldown =
-                                                skillCooldowns.find(
-                                                    (cd) => cd.id === skill.id
-                                                );
-                                            const isOnCooldown =
-                                                cooldown &&
-                                                cooldown.remaining > 0;
-
-                                            return (
-                                                <button
-                                                    key={skill.id}
-                                                    onClick={() =>
-                                                        useSkill(skill)
-                                                    }
-                                                    disabled={
-                                                        isOnCooldown ||
-                                                        !playerTurn ||
-                                                        loading ||
-                                                        gameOver
-                                                    }
-                                                    className={`w-full text-left p-2 rounded flex justify-between items-center ${
-                                                        isOnCooldown
-                                                            ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                                                            : playerTurn
-                                                            ? "bg-blue-100 hover:bg-blue-200"
-                                                            : "bg-gray-100"
-                                                    }`}
-                                                >
-                                                    <span>
-                                                        {skill.skill_name}
-                                                    </span>
-                                                    {isOnCooldown && (
-                                                        <span className="text-sm bg-gray-300 px-2 py-1 rounded-full">
-                                                            {cooldown.remaining}
-                                                        </span>
-                                                    )}
-                                                </button>
-                                            );
-                                        })}
                                     </div>
                                 </div>
+                            ) : (
+                                <div className="bg-gray-700/30 rounded-lg p-4 mb-4 text-center">
+                                    <p>No enemy found. Please try again.</p>
+                                </div>
+                            )}
 
-                                {/* Middle Column - Battle Area */}
-                                <div className="md:col-span-2">
-                                    {/* Enemy Info */}
-                                    {loading ? (
-                                        <div className="flex items-center justify-center h-48">
-                                            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-                                        </div>
-                                    ) : enemy ? (
-                                        <div className="bg-gray-50 p-4 rounded-md mb-4">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <h3 className="text-lg font-semibold">
-                                                    {enemy.name} (Level{" "}
-                                                    {enemy.level})
-                                                </h3>
-                                                <div className="text-sm">
-                                                    <span className="text-gray-600 mr-2">
-                                                        ATK
-                                                    </span>
-                                                    {enemy.attack_min}-
-                                                    {enemy.attack_max}
-                                                    <span className="text-gray-600 mx-2">
-                                                        DEF
-                                                    </span>
-                                                    {enemy.defense}
-                                                </div>
-                                            </div>
-
-                                            {/* Enemy Health Bar */}
-                                            <div className="mb-4">
-                                                <div className="flex justify-between text-sm mb-1">
-                                                    <span>HP</span>
-                                                    <span>
-                                                        {enemyHP} / {enemy.hp}
-                                                    </span>
-                                                </div>
-                                                <div className="w-full bg-gray-300 rounded-full h-4">
-                                                    <div
-                                                        className="bg-red-600 h-4 rounded-full"
-                                                        style={{
-                                                            width: `${
-                                                                (enemyHP /
-                                                                    enemy.hp) *
-                                                                100
-                                                            }%`,
-                                                        }}
-                                                    ></div>
-                                                </div>
-                                            </div>
-
-                                            {/* Enemy Image */}
-                                            <div className="flex justify-center my-4">
-                                                <img
-                                                    src={`/storage/${enemy.image_path}`}
-                                                    alt={enemy.name}
-                                                    className="h-40 object-contain"
-                                                />
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="bg-gray-50 p-4 rounded-md text-center">
-                                            <p>
-                                                No enemy found. Please try
-                                                again.
-                                            </p>
-                                        </div>
-                                    )}
-
-                                    {/* Game Log */}
-                                    <div className="bg-gray-50 p-4 rounded-md">
-                                        <h3 className="text-lg font-semibold mb-2">
-                                            Battle Log
-                                        </h3>
-                                        <div
-                                            id="game-log"
-                                            className="bg-white border border-gray-200 rounded p-3 h-64 overflow-y-auto text-sm"
+                            {/* Battle Log */}
+                            <div className="bg-gray-700/30 rounded-lg p-4 flex-grow">
+                                <h3 className="text-lg font-bold mb-3">
+                                    Battle Log
+                                </h3>
+                                <div
+                                    id="game-log"
+                                    className="bg-gray-800/70 border border-gray-700 rounded-lg p-4 h-64 overflow-y-auto text-sm font-mono"
+                                >
+                                    {gameLog.map((log, index) => (
+                                        <p
+                                            key={index}
+                                            className={`mb-1 ${
+                                                log.includes("You")
+                                                    ? "text-cyan-400"
+                                                    : log.includes("defeated")
+                                                    ? "text-green-400"
+                                                    : log.includes(
+                                                          "defeated by"
+                                                      )
+                                                    ? "text-red-400"
+                                                    : "text-gray-300"
+                                            }`}
                                         >
-                                            {gameLog.map((log, index) => (
-                                                <p key={index} className="mb-1">
-                                                    {log}
-                                                </p>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Game Controls */}
-                                    <div className="mt-4 flex justify-between">
-                                        <div>
-                                            <span className="mr-2 text-sm">
-                                                Level: {currentLevel}
-                                            </span>
-                                            <span className="text-sm">
-                                                {playerTurn
-                                                    ? "Your turn"
-                                                    : "Enemy turn"}
-                                            </span>
-                                        </div>
-                                        <DangerButton onClick={handleExitGame}>
-                                            Exit Game
-                                        </DangerButton>
-                                    </div>
+                                            {log}
+                                        </p>
+                                    ))}
                                 </div>
+                            </div>
+
+                            {/* Game Controls */}
+                            <div className="flex justify-between items-center mt-4">
+                                <div className="flex items-center space-x-3">
+                                    <span className="text-sm px-3 py-1 bg-gray-800 rounded-md">
+                                        Level: {currentLevel}
+                                    </span>
+                                    <span
+                                        className={`text-sm px-3 py-1 rounded-md ${
+                                            playerTurn
+                                                ? "bg-green-900/50 text-green-300"
+                                                : "bg-red-900/50 text-red-300"
+                                        }`}
+                                    >
+                                        {playerTurn
+                                            ? "Your turn"
+                                            : "Enemy turn"}
+                                    </span>
+                                </div>
+                                <button
+                                    onClick={handleExitGame}
+                                    className="px-4 py-2 bg-red-600 rounded-md text-sm font-medium hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition"
+                                >
+                                    Exit Game
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </AuthenticatedLayout>
+            </main>
+        </div>
     );
 }
